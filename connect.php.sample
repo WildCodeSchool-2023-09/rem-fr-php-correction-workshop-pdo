@@ -2,38 +2,3 @@
 define("DSN", "mysql:host=localhost;dbname=wcs;charset=UTF8");
 define("USER", "wilder");
 define("PASS", "Php4ever");
-
-if (!empty($_POST)) {
-    $data = array_map('trim', $_POST);
-    $data = array_map('htmlentities', $data);
-
-
-    $errors[] = []; 
-
-    if(!isset($data['title']) && empty($data['title'])) 
-    {
-        $errors['title'][] = 'Le champ titre est obligatoire';
-    }
-    
-    if(!isset($data['content']) && empty($data['content'])) 
-    {
-        $errors[] = 'Le champ content est obligatoire';
-    }
-
-    if(!isset($data['author']) && empty($data['author'])) 
-    {
-        $errors[] = 'Le champ author est obligatoire';
-    }
-
-    if (empty($errors)) {
-
-    $query = "INSERT INTO story (title, content, author) VALUES (:title, :content, :author)";
-    $statement = $pdo->prepare($query);
-    $statement->bindValue(':title', $data['title']);
-    $statement->bindValue(':content', $data['content']);
-    $statement->bindValue(':author', $data['author']);
-    $statement->execute();
-    header('Location: create.php');
-    exit();
-    }
-}
